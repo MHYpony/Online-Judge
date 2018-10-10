@@ -5,7 +5,7 @@ An simple java web project for online judge
 
 1.Download Tomcat，nginx，configure the nginx.conf in conf folder.
 
-2.Put the onlinejudge folder in disk C
+2.Put the onlinejudge folder in disk C.
 
 3.Build a java web project in Eclipse or any java IDE you like, and put spring-config.xml and web.xml in Webcontent folder.
 
