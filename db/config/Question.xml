@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="db.mapper.QuestionMapper">
+
+
+    <insert id="insertQuestion" parameterType="db.model.Question" useGeneratedKeys="true">
+        INSERT INTO questions (q_name, cid,description)
+        VALUES (#{name}, #{cid}, #{description})
+    </insert>
+    <update id="updateQuestion" parameterType="db.model.Question">
+        UPDATE questions
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">q_name = #{name},</if>
+            <if test="cid != null">cid = #{cid},</if>
+            <if test="description != null">description = #{description},</if>
+        </trim>
+        WHERE q_id = #{qid}
+    </update>
+    <delete id="deleteQuestion" parameterType="db.model.Question">
+        DELETE FROM questions
+        WHERE q_id = #{qid}
+    </delete>
+    
+    
+    <select id="selectQuestion" parameterType="db.model.Question" resultMap="questionResult">
+        SELECT q_id, description, q_name, cid
+        FROM questions WHERE 1=1 and 
+            <if test="qid != null"> q_id = #{qid} and</if>
+            <if test="cid != null">cid = #{cid} and</if>
+            <if test="qname != null ">q_name = #{qname} and</if>
+            <if test="description != null">description = #{description} and </if>
+             1=1
+        
+        <!--  
+		name 的判断空在传入参数时判断
+		<if test="true">
+			<where>
+				<if test="name != null">user_name = #{name}</if>
+			</where>
+		</if>
+		-->
+        <!-- 
+        <trim prefix="where" suffixOverrides=",">
+            <if test="qid != null">q_id = #{qid},</if>
+            <if test="cid != null">cid = #{cid},</if>
+            <if test="qname != null ">q_name = #{qname},</if>
+            <if test="description != null">description = #{description},</if>
+        </trim>
+         -->
+      
+    </select>
+    <!-- 
+    <if test="qid != null">q_id = #{qid}</if>
+            <if test="cid != null">cid = #{cid}</if>
+   
+            <if test="qname != null ">q_name = #{qname}</if>
+     
+    <if test="description != null">description = #{description}</if>
+     -->
+    <resultMap id="questionResult" type="db.model.Question">
+        <result column="q_id" jdbcType="INTEGER" property="qid"/>
+        <result column="q_name" jdbcType="VARCHAR" property="qname"/>
+        <result column="cid" jdbcType="INTEGER" property="cid"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+    </resultMap>
+</mapper>

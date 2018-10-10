@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="db.mapper.TestDataMapper">
+    <insert id="insertTestData" parameterType="db.model.TestData" useGeneratedKeys="true">
+        INSERT INTO test_data (qid, input, output)
+        VALUES (#{qid}, #{input}, #{output})
+    </insert>
+    <delete id="deleteTestData" parameterType="db.model.TestData">
+        DELETE FROM test_data
+        WHERE qid = #{qid}
+    </delete>
+    <select id="selectTestData" parameterType="db.model.TestData" resultMap="testDataResult">
+        SELECT * 
+        FROM test_data where 
+                <if test="qid != null">qid = #{qid}</if>
+    </select>
+    <resultMap id="testDataResult" type="db.model.TestData">
+        <id column="id" jdbcType="INTEGER" property="tid"/>
+        <result column="qid" jdbcType="INTEGER" property="qid"/>
+        <result column="input" jdbcType="VARCHAR" property="input"/>
+        <result column="output" jdbcType="VARCHAR" property="output"/>
+    </resultMap>
+
+</mapper>

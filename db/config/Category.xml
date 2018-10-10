@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="db.mapper.CategoryMapper">
+	<insert id="insertCategory" parameterType="db.model.Category" useGeneratedKeys="true">
+        INSERT INTO categories (name)
+        VALUES (#{name})
+    </insert>
+    <update id="updateCategory" parameterType="db.model.Category">
+        UPDATE categories
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+        </trim>
+        WHERE id = #{id}
+    </update>
+    <delete id="deleteCategory" parameterType="db.model.Category">
+        DELETE FROM categories
+        WHERE name = #{name}
+    </delete>
+    <select id="selectCategory" parameterType="db.model.Category" resultMap="categoryResult">
+        SELECT *
+        FROM categories where
+                <if test="name != null">name = #{name}</if>
+
+    </select>
+    <resultMap id="categoryResult" type="db.model.Category">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+    </resultMap>
+
+</mapper>
