@@ -1,7 +1,7 @@
 # online-judge
 An simple java web project for online judge
 ***
-##Instruction
+## Instruction
 
 1.Download Tomcat，nginx，configure the nginx.conf in conf folder.
 
